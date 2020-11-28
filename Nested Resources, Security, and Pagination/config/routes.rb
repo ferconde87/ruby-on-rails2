@@ -1,20 +1,21 @@
 Rails.application.routes.draw do
-  root to: "books#index"
+
+  root to: "todo_lists#index"
+  
+  resources :todo_lists do
+    resources :todo_items
+  end
+  
   
   get 'sessions/new'
-
   get 'sessions/create'
-
   get 'sessions/destroy'
-
-  resources :books do
-    resources :notes, only: [:create, :destroy]
-  end
   resources :sessions, only: [:new, :create, :destroy]
-
+  
   get "/login" => "sessions#new", as: "login"
   delete "/logout" => "sessions#destroy", as: "logout"
-
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -22,7 +23,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view' 
+  #   get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
